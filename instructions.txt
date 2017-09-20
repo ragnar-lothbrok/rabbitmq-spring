@@ -16,6 +16,8 @@ guest/guest
 
 There are three types of Exchange
 
+http://localhost:8080/swagger-ui.html
+
 1. Topic exchange
  == Here we can mention routing key or wild card as well. If no routing key matches packet won't be forwarded to any of the queues.
  == When sending events we have to mentioned exchange name along with routing key else packet will be forward to default exchange.
@@ -23,5 +25,14 @@ There are three types of Exchange
  == eg. if routing key is tx.event.* only tx.event.- will be accepted. Make sure when you test you delete # pattern first else you 
     will be confused that why event is accepted even though * used in routing key.
     
-2. 
+2. Fanout Exchange 
+== No matter what routing key you provide it will send message to all listeners.
 
+3. Header Exchange :
+== Will match key which is coming in header along with value.
+
+4. Direct Exchange :
+== Exact key should be matched.
+
+
+Don't forget to check queue bindings in UI if you think something is wrong with the routings. You may have to delete if you change bindings in code at debug time.
