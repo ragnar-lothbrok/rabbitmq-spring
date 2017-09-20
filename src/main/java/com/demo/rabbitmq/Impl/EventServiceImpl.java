@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.demo.rabbitmq.configurations.QueuConfig;
+import com.demo.rabbitmq.configurations.QueueConfig;
 import com.demo.rabbitmq.services.EventService;
 
 @Service
@@ -20,7 +20,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public <T> Boolean sendEvent(T t) {
 		LOGGER.info("Sending event through queue  = {} ", t);
-		rabbitTemplate.convertAndSend(QueuConfig.TX_EVENT_QUEUE, t);
+		rabbitTemplate.convertAndSend(QueueConfig.TOPIC_EXCHANGE_NAME, "tx.one.abc", t);
 
 		return true;
 	}

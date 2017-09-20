@@ -26,7 +26,7 @@ public class EventController {
 	public Boolean manageBookingSlot(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody TxEvent txEvent) {
 
-		LOGGER.info("manage slot request received = {} ", txEvent);
+		LOGGER.info("event produce request received = {} ", txEvent);
 		return eventService.sendEvent(txEvent);
 	}
 
