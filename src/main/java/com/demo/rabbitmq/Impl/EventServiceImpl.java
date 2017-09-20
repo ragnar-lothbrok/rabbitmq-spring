@@ -31,6 +31,8 @@ public class EventServiceImpl implements EventService {
 		Message receiveMessage = new Message("Queue2".toString().getBytes(), messageProperties);
 		rabbitTemplate.convertAndSend(QueueConfig.HEADER_EXCHANGE_NAME, "", receiveMessage);
 
+		rabbitTemplate.convertAndSend(QueueConfig.DIRECT_EXCHANGE_NAME, "direct.one", t);
+
 		return true;
 	}
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarable;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.HeadersExchange;
 import org.springframework.amqp.core.Queue;
@@ -25,6 +26,8 @@ public class QueueConfig {
 	public final static String FANOUT_EXCHANGE_NAME = "rabbitmq-fanout.exchange";
 
 	public final static String HEADER_EXCHANGE_NAME = "rabbitmq-header.exchange";
+
+	public final static String DIRECT_EXCHANGE_NAME = "rabbitmq-direct.exchange";
 
 	@Bean
 	Queue queueOne() {
@@ -87,6 +90,17 @@ public class QueueConfig {
 		return Arrays.asList(queue1, queue2, headerExchange,
 				BindingBuilder.bind(queue1).to(headerExchange).whereAny(firstQueueMap).match(),
 				BindingBuilder.bind(queue2).to(headerExchange).whereAny(secondQueueMap).match());
+	}
+
+	@Bean
+	public List<Declarable> directBindings() {
+		Queue queue1 = new Queue("direct.queue1", false);
+		Queue queue2 = new Queue("direct.queue2", false);
+		DirectExchange directExchange = new DirectExchange(DIRECT_EXCHANGE_NAME);
+
+		return Arrays.asList(queue1, queue2, directExchange,
+				BindingBuilder.bind(queue1).to(directExchange).with("direct.one"),
+				BindingBuilder.bind(queue2).to(directExchange).with("direct.two"));
 	}
 
 }

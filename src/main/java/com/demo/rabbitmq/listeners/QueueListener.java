@@ -54,4 +54,14 @@ public class QueueListener {
 	public <T> void receiveMessageFromHeader2(T t) {
 		LOGGER.info("Received with header.queue2 <" + t + ">");
 	}
+
+	@RabbitListener(queues = { "direct.queue1" })
+	public <T> void receiveMessageFromDirect1(T t) {
+		LOGGER.info("Received with direct.queue1 <" + t + ">");
+	}
+
+	@RabbitListener(queues = { "direct.queue2" })
+	public <T> void receiveMessageFromDirect2(T t) {
+		LOGGER.info("Received with direct.queue2 <" + t + ">");
+	}
 }
